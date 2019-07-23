@@ -1,3 +1,5 @@
 import 'package:flutter/widgets.dart';
 
-void main() => runApp(Text('hello!'));
+import 'component.dart';
+
+void main() => runApp(const DemoWidget());
