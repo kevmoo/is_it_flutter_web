@@ -1,4 +1,4 @@
-import 'package:demo_widget/component.dart';
+import 'package:demo_widget/demo_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
