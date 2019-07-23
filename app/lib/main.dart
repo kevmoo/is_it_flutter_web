@@ -21,7 +21,8 @@ class MyApp extends StatelessWidget {
               children: const [
                 DemoWidget(),
                 WebView(
-                  initialUrl: 'https://flutter.github.io/samples/',
+                  initialUrl: 'https://kevmoo.github.io/is_it_flutter_web/',
+                  javascriptMode: JavascriptMode.unrestricted,
                 ),
               ],
             ),
