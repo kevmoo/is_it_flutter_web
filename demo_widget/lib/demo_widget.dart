@@ -8,106 +8,107 @@ class DemoWidget extends StatefulWidget {
 }
 
 class _DemoWidgetState extends State<DemoWidget> {
-  bool checkboxValueA = true;
-  bool checkboxValueB = false;
-  bool checkboxValueC;
-  int radioValue = 0;
+  bool _checkboxValueA = true;
+  bool _checkboxValueB = false;
+  bool _checkboxValueC;
+  int _radioValue = 0;
 
-  void handleRadioValueChanged(int value) {
+  int _clickCount = 0;
+
+  final _textController = TextEditingController();
+
+  void _handleRadioValueChanged(int value) {
     setState(() {
-      radioValue = value;
+      _radioValue = value;
+    });
+  }
+
+  void _click() {
+    setState(() {
+      _clickCount++;
     });
   }
 
   @override
-  Widget build(BuildContext context) => Column(
+  Widget build(BuildContext context) => Padding(
+        padding: EdgeInsets.all(10),
+        child: SingleChildScrollView(
+          child: Column(
+            children: <Widget>[
+              _buildCheckbox(),
+              Divider(),
+              _buildRadio(),
+              Divider(),
+              FlatButton(
+                child: Text(_clickCount.toString()),
+                onPressed: _click,
+              ),
+              RaisedButton(
+                child: Text(_clickCount.toString()),
+                onPressed: _click,
+              ),
+              FloatingActionButton.extended(
+                onPressed: _click,
+                label: Text(_clickCount.toString()),
+              ),
+              Divider(),
+              TextField(
+                controller: _textController,
+                decoration: InputDecoration(
+                  labelText: 'Enter some text',
+                ),
+              )
+            ],
+          ),
+        ),
+      );
+
+  Widget _buildCheckbox() => Row(
+        mainAxisSize: MainAxisSize.min,
         children: <Widget>[
-          buildCheckbox(),
-          Divider(),
-          buildRadio(),
+          Checkbox(
+            value: _checkboxValueA,
+            onChanged: (bool value) {
+              setState(() {
+                _checkboxValueA = value;
+              });
+            },
+          ),
+          Checkbox(
+            value: _checkboxValueB,
+            onChanged: (bool value) {
+              setState(() {
+                _checkboxValueB = value;
+              });
+            },
+          ),
+          Checkbox(
+            value: _checkboxValueC,
+            tristate: true,
+            onChanged: (bool value) {
+              setState(() {
+                _checkboxValueC = value;
+              });
+            },
+          ),
         ],
       );
 
-  Widget buildCheckbox() => Align(
-        alignment: const Alignment(0.0, -0.2),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            Row(
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                Checkbox(
-                  value: checkboxValueA,
-                  onChanged: (bool value) {
-                    setState(() {
-                      checkboxValueA = value;
-                    });
-                  },
-                ),
-                Checkbox(
-                  value: checkboxValueB,
-                  onChanged: (bool value) {
-                    setState(() {
-                      checkboxValueB = value;
-                    });
-                  },
-                ),
-                Checkbox(
-                  value: checkboxValueC,
-                  tristate: true,
-                  onChanged: (bool value) {
-                    setState(() {
-                      checkboxValueC = value;
-                    });
-                  },
-                ),
-              ],
-            ),
-            Row(
-              mainAxisSize: MainAxisSize.min,
-              children: const <Widget>[
-                // Disabled checkboxes
-                Checkbox(value: true, onChanged: null),
-                Checkbox(value: false, onChanged: null),
-                Checkbox(value: null, tristate: true, onChanged: null),
-              ],
-            )
-          ],
-        ),
-      );
-
-  Widget buildRadio() => Align(
-        alignment: const Alignment(0.0, -0.2),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            Row(
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                Radio<int>(
-                    value: 0,
-                    groupValue: radioValue,
-                    onChanged: handleRadioValueChanged),
-                Radio<int>(
-                    value: 1,
-                    groupValue: radioValue,
-                    onChanged: handleRadioValueChanged),
-                Radio<int>(
-                    value: 2,
-                    groupValue: radioValue,
-                    onChanged: handleRadioValueChanged)
-              ],
-            ),
-            // Disabled radio buttons
-            Row(
-              mainAxisSize: MainAxisSize.min,
-              children: const <Widget>[
-                Radio<int>(value: 0, groupValue: 0, onChanged: null),
-                Radio<int>(value: 1, groupValue: 0, onChanged: null),
-                Radio<int>(value: 2, groupValue: 0, onChanged: null)
-              ],
-            )
-          ],
-        ),
+  Widget _buildRadio() => Row(
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          Radio<int>(
+              value: 0,
+              groupValue: _radioValue,
+              onChanged: _handleRadioValueChanged),
+          Radio<int>(
+              value: 1,
+              groupValue: _radioValue,
+              onChanged: _handleRadioValueChanged),
+          Radio<int>(
+              value: 2,
+              groupValue: _radioValue,
+              onChanged: _handleRadioValueChanged),
+        ],
       );
 }
